@@ -8,8 +8,15 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ContactsListViewController: UIViewController {
 
+    // MARK: - Properties
+    @IBOutlet weak var contactsListTableView: UITableView!
+    
+    //MARK: - Variable declarations
+    
+    
+    // MARK: - ViewController Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
