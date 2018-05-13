@@ -29,14 +29,14 @@ class ContactDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        ContactsApi.loadContactDetail(id: contactID!) { contactDetails in
+        ContactsApi.loadContactDetailById(id: contactID!) { contactDetails in
             self.contactDetails = contactDetails
             DispatchQueue.main.async {
                 self.loadContactInfo()
                 self.contactDetailTableView.reloadData()
             }
         }
-        setGradientBackground()
+        Utility.setGradientBackground(view: contactBgView)
         if !MFMailComposeViewController.canSendMail() {
             print("Mail services are not available")
             return
@@ -55,21 +55,44 @@ class ContactDetailViewController: UIViewController {
         if let _ = contactDetails?.profilePic {
             contactImageView.image = UIImage.init(named: "placeholder_photo")
         } else {
-             contactImageView.image = UIImage.init(named: "placeholder_photo")
+            contactImageView.image = UIImage.init(named: "placeholder_photo")
+        }
+        loadContactName()
+        loadContactFavStatus()
+    }
+    
+    fileprivate func loadContactName() {
+        if let firstName = contactDetails?.firstName  {
+            if let lastName = contactDetails?.lastName {
+                if (firstName == "" && lastName == "") {
+                    contactNameLabel.text = "Not Available"
+                }else if (firstName == "" && lastName != "") {
+                     contactNameLabel.text = lastName
+                }else if (firstName != "" && lastName == "") {
+                    contactNameLabel.text = firstName
+                }else {
+                    contactNameLabel.text = firstName + lastName
+                }
+            }else {
+                if firstName == "" {
+                    contactNameLabel.text = "Not Available"
+                } else {
+                    contactNameLabel.text = firstName
+                }
+            }
+        }else {
+            contactNameLabel.text = "Not Available"
         }
     }
     
-    fileprivate func setGradientBackground() {
-        let colorTop =  UIColor.white
-        let colorBottom = Utility.lightGreenColor.cgColor
-        
-        let gradient: CAGradientLayer = CAGradientLayer()
-        
-        gradient.colors = [colorTop, colorBottom]
-        gradient.locations = [0.0 , 1.0]
-        gradient.frame = self.contactBgView.bounds
-        
-        self.contactBgView.layer.insertSublayer(gradient, at: 0)
+    fileprivate func loadContactFavStatus() {
+        if let contactDetail = contactDetails {
+            if contactDetail.favorite == false {
+                contactFavButton.setImage(UIImage.init(named: "favourite_button"), for: UIControlState())
+            } else {
+                contactFavButton.setImage(UIImage.init(named: "favourite_button_selected"), for: UIControlState())
+            }
+        }
     }
     
     fileprivate func callOnNumber(phoneNumber: String) {
@@ -123,12 +146,26 @@ class ContactDetailViewController: UIViewController {
             }
         }
     }
+    
+    @IBAction func editBtnTapped(_ sender: Any) {
+        performSegue(withIdentifier: "editScreenSegue", sender: self)
+    }
+    
+    // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let editViewController = segue.destination as? ContactEditViewController else {
+            return
+        }
+        if let contactDetails = contactDetails {
+            editViewController.contactDetails = contactDetails
+        }
+    }
 }
 
 extension ContactDetailViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return contactDetailProperties.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

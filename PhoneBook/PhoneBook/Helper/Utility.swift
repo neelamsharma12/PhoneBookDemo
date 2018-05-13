@@ -21,4 +21,17 @@ class Utility {
         backItem.title = "Contact"
         navigationItem.backBarButtonItem = backItem
     }
+    
+    class func setGradientBackground(view: UIView) {
+        let colorTop =  UIColor.white
+        let colorBottom = Utility.lightGreenColor.cgColor
+        
+        let gradient: CAGradientLayer = CAGradientLayer()
+        
+        gradient.colors = [colorTop, colorBottom]
+        gradient.locations = [0.0 , 1.0]
+        gradient.frame = view.bounds
+        
+        view.layer.insertSublayer(gradient, at: 0)
+    }
 }

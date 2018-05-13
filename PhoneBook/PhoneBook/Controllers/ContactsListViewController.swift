@@ -22,12 +22,17 @@ class ContactsListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         ContactsApi.loadContacts() { contacts in
+            
             self.contacts = contacts
+            self.contacts = self.contacts?.sorted(by: { (Obj1, Obj2) -> Bool in
+                let Obj1_Name = Obj1.firstName!
+                let Obj2_Name = Obj2.firstName!
+                return (Obj1_Name.localizedCaseInsensitiveCompare(Obj2_Name) == .orderedAscending)
+            })
             DispatchQueue.main.async {
-               self.contactsListTableView.reloadData()
+                self.contactsListTableView.reloadData()
             }
         }
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -45,7 +50,6 @@ class ContactsListViewController: UIViewController {
         }
         Utility.customizeBackBtnText(navigationItem: navigationItem)
      }
- 
 }
 
 extension ContactsListViewController: UITableViewDataSource {
@@ -94,7 +98,7 @@ extension ContactsListViewController: UITableViewDelegate {
             selectedContactID = contactList[indexPath.row].ID
         }
         
-        performSegue(withIdentifier: "contactDetail", sender: self)
+        performSegue(withIdentifier: "contactDetailSegue", sender: self)
     }
 }
 

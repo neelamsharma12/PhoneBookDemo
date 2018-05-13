@@ -23,6 +23,7 @@
 		0035F08420A82734001C70CF /* ContactDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0035F08320A82734001C70CF /* ContactDetailTableViewCell.swift */; };
 		0035F08620A8340B001C70CF /* ContactDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0035F08520A8340B001C70CF /* ContactDetailModel.swift */; };
 		0035F08820A84151001C70CF /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0035F08720A84151001C70CF /* Utility.swift */; };
+		007C2DAE20A86A9C0069EFF1 /* ContactEditTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 007C2DAD20A86A9C0069EFF1 /* ContactEditTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,7 @@
 		0035F08320A82734001C70CF /* ContactDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDetailTableViewCell.swift; sourceTree = "<group>"; };
 		0035F08520A8340B001C70CF /* ContactDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDetailModel.swift; sourceTree = "<group>"; };
 		0035F08720A84151001C70CF /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
+		007C2DAD20A86A9C0069EFF1 /* ContactEditTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactEditTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +144,7 @@
 			children = (
 				0035F06B20A6B790001C70CF /* ContactTableViewCell.swift */,
 				0035F08320A82734001C70CF /* ContactDetailTableViewCell.swift */,
+				007C2DAD20A86A9C0069EFF1 /* ContactEditTableViewCell.swift */,
 				0035F05F20A6B701001C70CF /* LaunchScreen.storyboard */,
 				0035F06120A6B701001C70CF /* Main.storyboard */,
 			);
@@ -279,6 +282,7 @@
 				0035F07220A70378001C70CF /* ContactAddViewController.swift in Sources */,
 				0035F07020A70100001C70CF /* ContactEditViewController.swift in Sources */,
 				0035F07520A7F30B001C70CF /* ContactsApi.swift in Sources */,
+				007C2DAE20A86A9C0069EFF1 /* ContactEditTableViewCell.swift in Sources */,
 				0035F06C20A6B790001C70CF /* ContactTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

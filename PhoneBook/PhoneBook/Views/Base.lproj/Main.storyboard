@@ -86,7 +86,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="contactsListTableView" destination="y6D-x7-VkW" id="Cm4-ZA-521"/>
-                        <segue destination="Uu0-sH-s2Z" kind="show" identifier="contactDetail" id="Fww-jH-eO4"/>
+                        <segue destination="Uu0-sH-s2Z" kind="show" identifier="contactDetailSegue" id="Fww-jH-eO4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -202,10 +202,9 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CcD-bv-g4A">
-                                        <rect key="frame" x="94" y="148" width="186" height="20"/>
+                                        <rect key="frame" x="97" y="148" width="181" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="hNs-3L-u7j"/>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="186" id="nAR-8B-Tal"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <color key="textColor" red="0.2901960784" green="0.2901960784" blue="0.2901960784" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -224,13 +223,14 @@
                                     <constraint firstItem="Dtx-br-Afr" firstAttribute="leading" secondItem="qxY-0M-tFD" secondAttribute="trailing" constant="39" id="6QJ-hv-tJN"/>
                                     <constraint firstItem="MkU-9H-ILI" firstAttribute="centerX" secondItem="7x6-zi-qxS" secondAttribute="centerX" id="75U-0j-P2z"/>
                                     <constraint firstItem="qxY-0M-tFD" firstAttribute="centerY" secondItem="88j-9i-a8V" secondAttribute="centerY" id="7vy-fe-1ct"/>
+                                    <constraint firstAttribute="trailing" secondItem="CcD-bv-g4A" secondAttribute="trailing" constant="97" id="Am0-S7-9cE"/>
                                     <constraint firstItem="MkU-9H-ILI" firstAttribute="top" secondItem="7x6-zi-qxS" secondAttribute="bottom" constant="14" id="BYB-kD-PzZ"/>
                                     <constraint firstItem="e0m-sX-xrk" firstAttribute="top" secondItem="88j-9i-a8V" secondAttribute="bottom" constant="14" id="FVu-bG-sQP"/>
                                     <constraint firstItem="7x6-zi-qxS" firstAttribute="leading" secondItem="vBt-yh-22B" secondAttribute="leading" constant="44" id="PHX-Sx-IPh"/>
                                     <constraint firstItem="E0B-KM-sMN" firstAttribute="top" secondItem="qxY-0M-tFD" secondAttribute="bottom" constant="14" id="UYJ-Lf-JQI"/>
                                     <constraint firstItem="88j-9i-a8V" firstAttribute="centerY" secondItem="7x6-zi-qxS" secondAttribute="centerY" id="Va6-X8-rO8"/>
-                                    <constraint firstItem="CcD-bv-g4A" firstAttribute="centerX" secondItem="RI6-ER-xFi" secondAttribute="centerX" id="VsY-hT-nan"/>
                                     <constraint firstItem="RI6-ER-xFi" firstAttribute="centerX" secondItem="vBt-yh-22B" secondAttribute="centerX" id="a0e-Ug-4mW"/>
+                                    <constraint firstItem="CcD-bv-g4A" firstAttribute="leading" secondItem="vBt-yh-22B" secondAttribute="leading" constant="97" id="dFQ-ab-msV"/>
                                     <constraint firstItem="e0m-sX-xrk" firstAttribute="centerX" secondItem="88j-9i-a8V" secondAttribute="centerX" id="dVV-3h-aSs"/>
                                     <constraint firstItem="Jaa-qz-HIp" firstAttribute="centerX" secondItem="Dtx-br-Afr" secondAttribute="centerX" id="dih-4T-DsN"/>
                                     <constraint firstAttribute="height" constant="271" id="eel-ya-5HX"/>
@@ -314,7 +314,8 @@
                         <barButtonItem key="rightBarButtonItem" title="Edit" style="plain" id="IYn-Vx-fxF">
                             <color key="tintColor" red="0.31372549020000001" green="0.89019607840000003" blue="0.76078431369999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
-                                <segue destination="LkS-PB-E0c" kind="show" id="TsX-p9-GOB"/>
+                                <action selector="editBtnTapped:" destination="Uu0-sH-s2Z" id="T7h-mP-gWV"/>
+                                <segue destination="LkS-PB-E0c" kind="show" identifier="editScreenSegue" id="TsX-p9-GOB"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -361,6 +362,9 @@
                                             <constraint firstAttribute="width" constant="41" id="dmk-ms-Rt8"/>
                                         </constraints>
                                         <state key="normal" image="camera_button"/>
+                                        <connections>
+                                            <action selector="uploadImageBtnTapped:" destination="LkS-PB-E0c" eventType="touchUpInside" id="2z1-59-eT4"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -375,44 +379,53 @@
                                 <rect key="frame" x="0.0" y="270" width="375" height="353"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="56" id="0Wx-7o-Qgs">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="contactEditCell" rowHeight="56" id="0Wx-7o-Qgs" customClass="ContactEditTableViewCell" customModule="PhoneBook" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="56"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="0Wx-7o-Qgs" id="s8O-79-Vrb">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="55.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="mobile" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rnh-K0-2w2">
-                                                    <rect key="frame" x="23" y="18" width="58" height="20"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rnh-K0-2w2">
+                                                    <rect key="frame" x="24" y="18" width="82" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="58" id="NQW-bj-BcX"/>
+                                                        <constraint firstAttribute="height" constant="20" id="ruQ-ra-Njt"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.2901960784" green="0.2901960784" blue="0.2901960784" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Sa0-GL-mbD">
-                                                    <rect key="frame" x="103" y="18" width="242" height="20"/>
+                                                    <rect key="frame" x="138" y="18" width="205" height="20"/>
                                                     <color key="textColor" red="0.2901960784" green="0.2901960784" blue="0.2901960784" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="Sa0-GL-mbD" firstAttribute="leading" secondItem="Rnh-K0-2w2" secondAttribute="trailing" constant="22" id="Mlc-iv-ABD"/>
+                                                <constraint firstItem="Sa0-GL-mbD" firstAttribute="leading" secondItem="Rnh-K0-2w2" secondAttribute="trailing" constant="32" id="Mlc-iv-ABD"/>
                                                 <constraint firstItem="Sa0-GL-mbD" firstAttribute="centerY" secondItem="Rnh-K0-2w2" secondAttribute="centerY" id="TSH-e7-YZB"/>
-                                                <constraint firstAttribute="trailing" secondItem="Sa0-GL-mbD" secondAttribute="trailing" constant="30" id="TlJ-7O-XRf"/>
-                                                <constraint firstItem="Sa0-GL-mbD" firstAttribute="leading" secondItem="s8O-79-Vrb" secondAttribute="leading" constant="103" id="UNV-K7-RRy"/>
+                                                <constraint firstAttribute="trailing" secondItem="Sa0-GL-mbD" secondAttribute="trailing" constant="32" id="TlJ-7O-XRf"/>
+                                                <constraint firstItem="Sa0-GL-mbD" firstAttribute="leading" secondItem="s8O-79-Vrb" secondAttribute="leading" constant="138" id="UNV-K7-RRy"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <constraints>
                                             <constraint firstItem="Rnh-K0-2w2" firstAttribute="centerY" secondItem="0Wx-7o-Qgs" secondAttribute="centerY" id="MCR-11-LVN"/>
-                                            <constraint firstItem="Rnh-K0-2w2" firstAttribute="leading" secondItem="0Wx-7o-Qgs" secondAttribute="leading" constant="23" id="yX3-dQ-7ic"/>
+                                            <constraint firstItem="Rnh-K0-2w2" firstAttribute="leading" secondItem="0Wx-7o-Qgs" secondAttribute="leading" constant="24" id="yX3-dQ-7ic"/>
                                         </constraints>
                                         <inset key="separatorInset" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <connections>
+                                            <outlet property="editContactPropertyInfoLabel" destination="Sa0-GL-mbD" id="BFx-2f-4xP"/>
+                                            <outlet property="editContactPropertyNameLabel" destination="Rnh-K0-2w2" id="YQS-x5-j1D"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <sections/>
+                                <connections>
+                                    <outlet property="dataSource" destination="LkS-PB-E0c" id="jFe-oT-3SS"/>
+                                    <outlet property="delegate" destination="LkS-PB-E0c" id="jy8-sW-MQF"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -430,20 +443,29 @@
                     <navigationItem key="navigationItem" id="au4-ye-wLf">
                         <barButtonItem key="leftBarButtonItem" title="Cancel" style="plain" id="V17-Oz-bXl">
                             <color key="tintColor" red="0.31372549020000001" green="0.89019607840000003" blue="0.76078431369999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="cancelBtnTapped:" destination="LkS-PB-E0c" id="Xbu-cL-cMT"/>
+                            </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Done" style="plain" id="aSh-RR-DQr">
                             <color key="tintColor" red="0.31372549020000001" green="0.89019607840000003" blue="0.76078431369999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="doneBtnTapped:" destination="LkS-PB-E0c" id="rU3-Es-qLr"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
                     <size key="freeformSize" width="375" height="623"/>
                     <connections>
-                        <outlet property="productImageView" destination="86Z-VP-wPq" id="dKv-F8-Aq7"/>
+                        <outlet property="editContactBgView" destination="Rkb-Bc-MVI" id="kFF-Fx-e2w"/>
+                        <outlet property="editContactDetailTableView" destination="oLp-90-uEz" id="GAJ-fW-CHK"/>
+                        <outlet property="editContactImageView" destination="86Z-VP-wPq" id="HVB-K0-MTo"/>
+                        <outlet property="uploadImageButton" destination="Ayc-Ez-94N" id="SyE-h3-fq5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Urx-8a-Pcf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1313" y="708"/>
+            <point key="canvasLocation" x="1312.8" y="707.49625187406298"/>
         </scene>
         <!--Contact Add View Controller-->
         <scene sceneID="Frn-ky-ybU">
@@ -474,6 +496,9 @@
                                             <constraint firstAttribute="width" constant="41" id="r1s-HX-kKf"/>
                                         </constraints>
                                         <state key="normal" image="camera_button"/>
+                                        <connections>
+                                            <action selector="uploadImageBtnTapped:" destination="08J-sZ-OhL" eventType="touchUpInside" id="4gf-jH-bZJ"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -488,34 +513,35 @@
                                 <rect key="frame" x="0.0" y="270" width="375" height="353"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="56" id="Z6A-gi-zgK">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="addContactCell" rowHeight="56" id="Z6A-gi-zgK" customClass="ContactEditTableViewCell" customModule="PhoneBook" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="56"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Z6A-gi-zgK" id="hqy-Gs-2QT">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="55.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="mobile" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rlv-uU-gVx">
-                                                    <rect key="frame" x="23" y="18" width="58" height="20"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rlv-uU-gVx">
+                                                    <rect key="frame" x="23" y="18" width="83" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="58" id="8Uj-38-nQK"/>
+                                                        <constraint firstAttribute="height" constant="20" id="uxk-Gx-KQZ"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.2901960784" green="0.2901960784" blue="0.2901960784" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Not available" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LgK-CR-Drg">
-                                                    <rect key="frame" x="103" y="18" width="242" height="20"/>
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LgK-CR-Drg">
+                                                    <rect key="frame" x="138" y="18" width="215" height="20"/>
                                                     <color key="textColor" red="0.2901960784" green="0.2901960784" blue="0.2901960784" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="LgK-CR-Drg" secondAttribute="trailing" constant="30" id="8OK-SD-caL"/>
-                                                <constraint firstItem="LgK-CR-Drg" firstAttribute="leading" secondItem="Rlv-uU-gVx" secondAttribute="trailing" constant="22" id="LgC-xc-GGz"/>
+                                                <constraint firstAttribute="trailing" secondItem="LgK-CR-Drg" secondAttribute="trailing" constant="22" id="8OK-SD-caL"/>
+                                                <constraint firstItem="LgK-CR-Drg" firstAttribute="leading" secondItem="Rlv-uU-gVx" secondAttribute="trailing" constant="32" id="LgC-xc-GGz"/>
                                                 <constraint firstItem="LgK-CR-Drg" firstAttribute="centerY" secondItem="Rlv-uU-gVx" secondAttribute="centerY" id="Rxo-9c-ekE"/>
-                                                <constraint firstItem="LgK-CR-Drg" firstAttribute="leading" secondItem="hqy-Gs-2QT" secondAttribute="leading" constant="103" id="dVO-Km-0h2"/>
+                                                <constraint firstItem="LgK-CR-Drg" firstAttribute="leading" secondItem="hqy-Gs-2QT" secondAttribute="leading" constant="138" id="dVO-Km-0h2"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <constraints>
@@ -523,9 +549,17 @@
                                             <constraint firstItem="Rlv-uU-gVx" firstAttribute="leading" secondItem="Z6A-gi-zgK" secondAttribute="leading" constant="23" id="e59-8S-fYq"/>
                                         </constraints>
                                         <inset key="separatorInset" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <connections>
+                                            <outlet property="editContactPropertyInfoLabel" destination="LgK-CR-Drg" id="VCF-G2-Avt"/>
+                                            <outlet property="editContactPropertyNameLabel" destination="Rlv-uU-gVx" id="X4C-wM-WkL"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <sections/>
+                                <connections>
+                                    <outlet property="dataSource" destination="08J-sZ-OhL" id="0i8-ob-j8b"/>
+                                    <outlet property="delegate" destination="08J-sZ-OhL" id="gLe-jV-GDf"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -543,20 +577,29 @@
                     <navigationItem key="navigationItem" id="UK3-xR-6QA">
                         <barButtonItem key="leftBarButtonItem" title="Cancel" style="plain" id="Uwg-pp-vlK">
                             <color key="tintColor" red="0.31372549020000001" green="0.89019607840000003" blue="0.76078431369999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="cancelBtnTapped:" destination="08J-sZ-OhL" id="v8n-nD-PC3"/>
+                            </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Done" style="plain" id="53d-3V-9NA">
                             <color key="tintColor" red="0.31372549020000001" green="0.89019607840000003" blue="0.76078431369999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="doneBtnTapped:" destination="08J-sZ-OhL" id="Wgh-WT-iec"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
                     <size key="freeformSize" width="375" height="623"/>
                     <connections>
-                        <outlet property="productImageView" destination="Bpd-AW-dUt" id="yTF-Dn-krs"/>
+                        <outlet property="addContactBgView" destination="eZT-EP-aNs" id="Wej-gF-TPu"/>
+                        <outlet property="addContactDetailTableView" destination="Gpa-9b-3e9" id="zOc-BS-NBt"/>
+                        <outlet property="addContactImageView" destination="Bpd-AW-dUt" id="dB6-oj-3Kz"/>
+                        <outlet property="uploadImageButton" destination="lj4-tQ-rlf" id="hmk-ob-5PY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FNF-kX-AJR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="814" y="-49"/>
+            <point key="canvasLocation" x="813.60000000000002" y="-49.025487256371818"/>
         </scene>
     </scenes>
     <resources>
