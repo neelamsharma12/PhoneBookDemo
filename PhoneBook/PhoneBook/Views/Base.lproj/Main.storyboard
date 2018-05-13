@@ -138,7 +138,7 @@
                                             <constraint firstAttribute="width" constant="120" id="yfx-tZ-Rom"/>
                                         </constraints>
                                     </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7x6-zi-qxS">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7x6-zi-qxS" userLabel="msgButton">
                                         <rect key="frame" x="44" y="186" width="44" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="Ay5-a7-1yP"/>
@@ -149,7 +149,7 @@
                                             <action selector="sendMessageBtnTapped:" destination="Uu0-sH-s2Z" eventType="touchUpInside" id="kmD-yz-Shd"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="88j-9i-a8V">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="88j-9i-a8V" userLabel="callButton">
                                         <rect key="frame" x="124" y="186" width="44" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="VlH-b2-8a5"/>
@@ -160,7 +160,7 @@
                                             <action selector="callBtnTapped:" destination="Uu0-sH-s2Z" eventType="touchUpInside" id="ghW-Nq-VJg"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qxY-0M-tFD">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qxY-0M-tFD" userLabel="emailButton">
                                         <rect key="frame" x="204" y="186" width="44" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="MNN-gd-MeA"/>
@@ -254,9 +254,10 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6le-6K-2Ph">
-                                                    <rect key="frame" x="23" y="28" width="65" height="0.0"/>
+                                                    <rect key="frame" x="23" y="18" width="65" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="58" id="Pcr-yC-y1m"/>
+                                                        <constraint firstAttribute="height" constant="20" id="ugF-Q9-KfM"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.2901960784" green="0.2901960784" blue="0.2901960784" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -322,6 +323,7 @@
                     <connections>
                         <outlet property="contactBgView" destination="vBt-yh-22B" id="ZPx-zk-Mg2"/>
                         <outlet property="contactDetailTableView" destination="zA0-YK-OvJ" id="Y3d-99-4J9"/>
+                        <outlet property="contactFavButton" destination="Dtx-br-Afr" id="oLw-nf-Ujx"/>
                         <outlet property="contactImageView" destination="RI6-ER-xFi" id="HVt-BE-Gw9"/>
                         <outlet property="contactNameLabel" destination="CcD-bv-g4A" id="ynA-ip-o8u"/>
                     </connections>
@@ -502,7 +504,7 @@
                                                     <color key="textColor" red="0.2901960784" green="0.2901960784" blue="0.2901960784" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LgK-CR-Drg">
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Not available" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LgK-CR-Drg">
                                                     <rect key="frame" x="103" y="18" width="242" height="20"/>
                                                     <color key="textColor" red="0.2901960784" green="0.2901960784" blue="0.2901960784" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>

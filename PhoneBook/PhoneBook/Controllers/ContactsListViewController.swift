@@ -43,7 +43,7 @@ class ContactsListViewController: UIViewController {
         if let id = selectedContactID {
             detailViewController.contactID = id
         }
-         Utility.customizeBackBtnText(navigationItem)
+        Utility.customizeBackBtnText(navigationItem: navigationItem)
      }
  
 }
@@ -74,7 +74,7 @@ extension ContactsListViewController: UITableViewDataSource {
             }
             let lineView = UIView(frame: CGRect(x: 20, y: cell.contentView.frame.size.height - 1.0, width: cell.contentView.frame.size.width - 20, height: 1))
             
-            lineView.backgroundColor = UIColor(red: 239.0/255.0, green: 239.0/255.0, blue: 239.0/255.0, alpha: 1)
+            lineView.backgroundColor = Utility.customGreyColor
             cell.contentView.addSubview(lineView)
         }
         return cell
