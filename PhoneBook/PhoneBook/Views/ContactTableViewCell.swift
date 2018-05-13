@@ -10,6 +10,7 @@ import UIKit
 
 class ContactTableViewCell: UITableViewCell {
 
+    // MARK: - Properties
     @IBOutlet weak var contactImageView: UIImageView!
     @IBOutlet weak var contactNameLabel: UILabel!
     @IBOutlet weak var contactFavButton: UIButton!

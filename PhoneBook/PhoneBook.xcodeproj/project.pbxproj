@@ -20,6 +20,9 @@
 		0035F07220A70378001C70CF /* ContactAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0035F07120A70378001C70CF /* ContactAddViewController.swift */; };
 		0035F07520A7F30B001C70CF /* ContactsApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0035F07420A7F30B001C70CF /* ContactsApi.swift */; };
 		0035F08220A8063F001C70CF /* ContactModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0035F08120A8063F001C70CF /* ContactModel.swift */; };
+		0035F08420A82734001C70CF /* ContactDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0035F08320A82734001C70CF /* ContactDetailTableViewCell.swift */; };
+		0035F08620A8340B001C70CF /* ContactDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0035F08520A8340B001C70CF /* ContactDetailModel.swift */; };
+		0035F08820A84151001C70CF /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0035F08720A84151001C70CF /* Utility.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +53,9 @@
 		0035F07120A70378001C70CF /* ContactAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactAddViewController.swift; sourceTree = "<group>"; };
 		0035F07420A7F30B001C70CF /* ContactsApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsApi.swift; sourceTree = "<group>"; };
 		0035F08120A8063F001C70CF /* ContactModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactModel.swift; sourceTree = "<group>"; };
+		0035F08320A82734001C70CF /* ContactDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDetailTableViewCell.swift; sourceTree = "<group>"; };
+		0035F08520A8340B001C70CF /* ContactDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDetailModel.swift; sourceTree = "<group>"; };
+		0035F08720A84151001C70CF /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,8 +100,7 @@
 				0035F05D20A6B6F4001C70CF /* Models */,
 				0035F05E20A6B701001C70CF /* Views */,
 				0035F05A20A6B6DC001C70CF /* Controllers */,
-				0035F06A20A6B724001C70CF /* UIHelper */,
-				0035F07320A7F2E8001C70CF /* Utility */,
+				0035F07320A7F2E8001C70CF /* Helper */,
 				0035F06520A6B718001C70CF /* Supporting Files */,
 				0035F03820A6A3F1001C70CF /* Assets.xcassets */,
 				0035F03D20A6A3F1001C70CF /* Info.plist */,
@@ -127,6 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				0035F08120A8063F001C70CF /* ContactModel.swift */,
+				0035F08520A8340B001C70CF /* ContactDetailModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -134,6 +140,8 @@
 		0035F05E20A6B701001C70CF /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				0035F06B20A6B790001C70CF /* ContactTableViewCell.swift */,
+				0035F08320A82734001C70CF /* ContactDetailTableViewCell.swift */,
 				0035F05F20A6B701001C70CF /* LaunchScreen.storyboard */,
 				0035F06120A6B701001C70CF /* Main.storyboard */,
 			);
@@ -150,20 +158,13 @@
 			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		0035F06A20A6B724001C70CF /* UIHelper */ = {
-			isa = PBXGroup;
-			children = (
-				0035F06B20A6B790001C70CF /* ContactTableViewCell.swift */,
-			);
-			path = UIHelper;
-			sourceTree = "<group>";
-		};
-		0035F07320A7F2E8001C70CF /* Utility */ = {
+		0035F07320A7F2E8001C70CF /* Helper */ = {
 			isa = PBXGroup;
 			children = (
 				0035F07420A7F30B001C70CF /* ContactsApi.swift */,
+				0035F08720A84151001C70CF /* Utility.swift */,
 			);
-			path = Utility;
+			path = Helper;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -268,7 +269,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0035F08420A82734001C70CF /* ContactDetailTableViewCell.swift in Sources */,
+				0035F08620A8340B001C70CF /* ContactDetailModel.swift in Sources */,
 				0035F06820A6B718001C70CF /* AppDelegate.swift in Sources */,
+				0035F08820A84151001C70CF /* Utility.swift in Sources */,
 				0035F05C20A6B6DC001C70CF /* ContactsListViewController.swift in Sources */,
 				0035F08220A8063F001C70CF /* ContactModel.swift in Sources */,
 				0035F06E20A6B8FC001C70CF /* ContactDetailViewController.swift in Sources */,

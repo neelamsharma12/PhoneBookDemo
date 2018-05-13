@@ -16,6 +16,7 @@ class ContactsListViewController: UIViewController {
     //MARK: - Variable declarations
      var contacts: [ContactModel]? = nil
      let contactRowHeight: CGFloat = 65
+     var selectedContactID: Int?
     
     // MARK: - ViewController Lifecycle
     override func viewDidLoad() {
@@ -34,8 +35,17 @@ class ContactsListViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-
-    //MARK : - Private methods
+     // MARK: - Navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let detailViewController = segue.destination as? ContactDetailViewController else {
+            return
+        }
+        if let id = selectedContactID {
+            detailViewController.contactID = id
+        }
+         Utility.customizeBackBtnText(navigationItem)
+     }
+ 
 }
 
 extension ContactsListViewController: UITableViewDataSource {
@@ -75,7 +85,16 @@ extension ContactsListViewController: UITableViewDataSource {
 
 extension ContactsListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return ceil(contactRowHeight)
+        return contactRowHeight
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if let contactList  = contacts {
+            selectedContactID = contactList[indexPath.row].ID
+        }
+        
+        performSegue(withIdentifier: "contactDetail", sender: self)
     }
 }
 
