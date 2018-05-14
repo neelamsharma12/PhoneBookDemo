@@ -24,6 +24,12 @@
 		0035F08620A8340B001C70CF /* ContactDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0035F08520A8340B001C70CF /* ContactDetailModel.swift */; };
 		0035F08820A84151001C70CF /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0035F08720A84151001C70CF /* Utility.swift */; };
 		007C2DAE20A86A9C0069EFF1 /* ContactEditTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 007C2DAD20A86A9C0069EFF1 /* ContactEditTableViewCell.swift */; };
+		007C2DB020A9446B0069EFF1 /* ContactModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 007C2DAF20A9446B0069EFF1 /* ContactModelTests.swift */; };
+		007C2DB220A944810069EFF1 /* ContactDetailModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 007C2DB120A944810069EFF1 /* ContactDetailModelTests.swift */; };
+		007C2DB620A948B00069EFF1 /* ContactsListViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 007C2DB520A948B00069EFF1 /* ContactsListViewControllerTests.swift */; };
+		007C2DB820A948D10069EFF1 /* ContactDetailViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 007C2DB720A948D10069EFF1 /* ContactDetailViewControllerTests.swift */; };
+		007C2DBA20A948E60069EFF1 /* ContactEditViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 007C2DB920A948E60069EFF1 /* ContactEditViewControllerTests.swift */; };
+		007C2DBC20A949070069EFF1 /* ContactAddViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 007C2DBB20A949070069EFF1 /* ContactAddViewControllerTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +64,12 @@
 		0035F08520A8340B001C70CF /* ContactDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDetailModel.swift; sourceTree = "<group>"; };
 		0035F08720A84151001C70CF /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		007C2DAD20A86A9C0069EFF1 /* ContactEditTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactEditTableViewCell.swift; sourceTree = "<group>"; };
+		007C2DAF20A9446B0069EFF1 /* ContactModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactModelTests.swift; sourceTree = "<group>"; };
+		007C2DB120A944810069EFF1 /* ContactDetailModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDetailModelTests.swift; sourceTree = "<group>"; };
+		007C2DB520A948B00069EFF1 /* ContactsListViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsListViewControllerTests.swift; sourceTree = "<group>"; };
+		007C2DB720A948D10069EFF1 /* ContactDetailViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDetailViewControllerTests.swift; sourceTree = "<group>"; };
+		007C2DB920A948E60069EFF1 /* ContactEditViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactEditViewControllerTests.swift; sourceTree = "<group>"; };
+		007C2DBB20A949070069EFF1 /* ContactAddViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactAddViewControllerTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +125,12 @@
 		0035F04520A6A3F1001C70CF /* PhoneBookTests */ = {
 			isa = PBXGroup;
 			children = (
+				007C2DB520A948B00069EFF1 /* ContactsListViewControllerTests.swift */,
+				007C2DB720A948D10069EFF1 /* ContactDetailViewControllerTests.swift */,
+				007C2DB920A948E60069EFF1 /* ContactEditViewControllerTests.swift */,
+				007C2DBB20A949070069EFF1 /* ContactAddViewControllerTests.swift */,
+				007C2DAF20A9446B0069EFF1 /* ContactModelTests.swift */,
+				007C2DB120A944810069EFF1 /* ContactDetailModelTests.swift */,
 				0035F04620A6A3F1001C70CF /* PhoneBookTests.swift */,
 				0035F04820A6A3F2001C70CF /* Info.plist */,
 			);
@@ -142,11 +160,8 @@
 		0035F05E20A6B701001C70CF /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				0035F06B20A6B790001C70CF /* ContactTableViewCell.swift */,
-				0035F08320A82734001C70CF /* ContactDetailTableViewCell.swift */,
-				007C2DAD20A86A9C0069EFF1 /* ContactEditTableViewCell.swift */,
-				0035F05F20A6B701001C70CF /* LaunchScreen.storyboard */,
-				0035F06120A6B701001C70CF /* Main.storyboard */,
+				007C2DB320A948260069EFF1 /* StoryBoard */,
+				007C2DB420A9483F0069EFF1 /* CustomCell */,
 			);
 			name = Views;
 			path = PhoneBook/Views;
@@ -168,6 +183,25 @@
 				0035F08720A84151001C70CF /* Utility.swift */,
 			);
 			path = Helper;
+			sourceTree = "<group>";
+		};
+		007C2DB320A948260069EFF1 /* StoryBoard */ = {
+			isa = PBXGroup;
+			children = (
+				0035F06120A6B701001C70CF /* Main.storyboard */,
+				0035F05F20A6B701001C70CF /* LaunchScreen.storyboard */,
+			);
+			path = StoryBoard;
+			sourceTree = "<group>";
+		};
+		007C2DB420A9483F0069EFF1 /* CustomCell */ = {
+			isa = PBXGroup;
+			children = (
+				0035F06B20A6B790001C70CF /* ContactTableViewCell.swift */,
+				0035F08320A82734001C70CF /* ContactDetailTableViewCell.swift */,
+				007C2DAD20A86A9C0069EFF1 /* ContactEditTableViewCell.swift */,
+			);
+			path = CustomCell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -291,6 +325,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				007C2DB020A9446B0069EFF1 /* ContactModelTests.swift in Sources */,
+				007C2DB820A948D10069EFF1 /* ContactDetailViewControllerTests.swift in Sources */,
+				007C2DB620A948B00069EFF1 /* ContactsListViewControllerTests.swift in Sources */,
+				007C2DBA20A948E60069EFF1 /* ContactEditViewControllerTests.swift in Sources */,
+				007C2DBC20A949070069EFF1 /* ContactAddViewControllerTests.swift in Sources */,
+				007C2DB220A944810069EFF1 /* ContactDetailModelTests.swift in Sources */,
 				0035F04720A6A3F1001C70CF /* PhoneBookTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -11,9 +11,14 @@ import Foundation
 class ContactsApi {
     
     static let GetContacts = "http://gojek-contacts-app.herokuapp.com/contacts.json"
+    
     static let GetContactDetailBaseUrlString = "http://gojek-contacts-app.herokuapp.com/contacts"
+    
     static let EditContactDetailsBaseUrlString = "http://gojek-contacts-app.herokuapp.com/contacts"
+    
     static let AddContact = "http://gojek-contacts-app.herokuapp.com/contacts.json"
+    
+    
     
     class func loadContacts(completion: @escaping (_ contacts: [ContactModel]) -> ()) {
         

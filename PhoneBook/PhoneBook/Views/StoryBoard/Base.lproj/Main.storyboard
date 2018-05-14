@@ -13,7 +13,7 @@
         <!--Contact-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController hidesBottomBarWhenPushed="YES" id="BYZ-38-t0r" customClass="ContactsListViewController" customModule="PhoneBook" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="contactListVC" hidesBottomBarWhenPushed="YES" id="BYZ-38-t0r" customClass="ContactsListViewController" customModule="PhoneBook" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="65" sectionHeaderHeight="28" sectionFooterHeight="28" id="y6D-x7-VkW">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
@@ -119,7 +119,7 @@
         <!--Contact Detail View Controller-->
         <scene sceneID="fje-wi-2bo">
             <objects>
-                <viewController storyboardIdentifier="contactDetailIdf" hidesBottomBarWhenPushed="YES" id="Uu0-sH-s2Z" customClass="ContactDetailViewController" customModule="PhoneBook" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="contactDetailVC" hidesBottomBarWhenPushed="YES" id="Uu0-sH-s2Z" customClass="ContactDetailViewController" customModule="PhoneBook" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="6Vl-xL-0VD"/>
                         <viewControllerLayoutGuide type="bottom" id="3TT-0t-Rxn"/>
@@ -336,7 +336,7 @@
         <!--Contact Edit View Controller-->
         <scene sceneID="raN-nZ-meR">
             <objects>
-                <viewController hidesBottomBarWhenPushed="YES" id="LkS-PB-E0c" customClass="ContactEditViewController" customModule="PhoneBook" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="contactEditVC" hidesBottomBarWhenPushed="YES" id="LkS-PB-E0c" customClass="ContactEditViewController" customModule="PhoneBook" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Z49-jo-cgj"/>
                         <viewControllerLayoutGuide type="bottom" id="awK-qt-ZvM"/>
@@ -470,7 +470,7 @@
         <!--Contact Add View Controller-->
         <scene sceneID="Frn-ky-ybU">
             <objects>
-                <viewController hidesBottomBarWhenPushed="YES" id="08J-sZ-OhL" customClass="ContactAddViewController" customModule="PhoneBook" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="contactAddVC" hidesBottomBarWhenPushed="YES" id="08J-sZ-OhL" customClass="ContactAddViewController" customModule="PhoneBook" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="hW9-Y4-MU0"/>
                         <viewControllerLayoutGuide type="bottom" id="hZd-rl-HYL"/>
