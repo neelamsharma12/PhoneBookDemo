@@ -51,16 +51,44 @@ class ContactDetailViewController: UIViewController {
     
     //Private methods
     
+    /**
+     function to load the contact details information
+     - parameter
+     - returns
+     */
     fileprivate func loadContactInfo() {
-        if let _ = contactDetails?.profilePic {
-            contactImageView.image = UIImage.init(named: "placeholder_photo")
-        } else {
+        contactImageView.layer.cornerRadius = (contactImageView.frame.width/2)
+        contactImageView.clipsToBounds = true
+        contactImageView.contentMode = UIViewContentMode.scaleAspectFill
+        
+        if let imageUrl = contactDetails?.profilePic {
+            let url: URL?
+            
+            if imageUrl == "/images/missing.png" {
+                url = URL(string: Utility.ContactImageBaseUrlString+imageUrl)
+            }else {
+                url = URL(string: imageUrl)
+            }
+            DispatchQueue.global().async {
+                let data = try? Data(contentsOf: url!)
+                if let imageData = data {
+                    DispatchQueue.main.async {
+                       self.contactImageView.image = UIImage(data: imageData)
+                    }
+                }
+            }
+        }else {
             contactImageView.image = UIImage.init(named: "placeholder_photo")
         }
         loadContactName()
         loadContactFavStatus()
     }
     
+    /**
+     function to load contact name
+     - parameter
+     - returns
+     */
     fileprivate func loadContactName() {
         if let firstName = contactDetails?.firstName  {
             if let lastName = contactDetails?.lastName {
@@ -85,6 +113,11 @@ class ContactDetailViewController: UIViewController {
         }
     }
     
+    /**
+     function to load contact favourite status
+     - parameter
+     - returns
+     */
     fileprivate func loadContactFavStatus() {
         if let contactDetail = contactDetails {
             if contactDetail.favorite == false {
@@ -95,6 +128,11 @@ class ContactDetailViewController: UIViewController {
         }
     }
     
+    /**
+     function to make call on specfic number
+     - parameter: phoneNumber: String
+     - returns
+     */
     fileprivate func callOnNumber(phoneNumber: String) {
         if let url = URL(string: "tel://\(phoneNumber)") {
             if #available(iOS 10, *) {
@@ -106,6 +144,12 @@ class ContactDetailViewController: UIViewController {
     }
 
     //MARK: - IBAction Methods
+    
+    /**
+     IBAction to be called on tap of send message button
+     - parameter: sender: Any
+     - returns
+     */
     @IBAction func sendMessageBtnTapped(_ sender: Any) {
         if (MFMessageComposeViewController.canSendText()) {
             let controller = MFMessageComposeViewController()
@@ -118,10 +162,20 @@ class ContactDetailViewController: UIViewController {
         }
     }
     
+    /**
+     IBAction to be called on tap of call button
+     - parameter: sender: Any
+     - returns
+     */
     @IBAction func callBtnTapped(_ sender: Any) {
         callOnNumber(phoneNumber: "1234567891")
     }
     
+    /**
+     IBAction to be called on tap of send email button
+     - parameter: sender: Any
+     - returns
+     */
     @IBAction func sendEmailBtnTapped(_ sender: Any) {
         let composeVC = MFMailComposeViewController()
         composeVC.mailComposeDelegate = self
@@ -135,7 +189,14 @@ class ContactDetailViewController: UIViewController {
         self.present(composeVC, animated: true, completion: nil)
     }
     
+    /**
+     IBAction to be called on tap of favourite button
+     - parameter: sender: Any
+     - returns
+     */
     @IBAction func favouriteBtnTapped(_ sender: Any) {
+        var updatedContactDetails = [String: Any]()
+        
         if let contactDetail = contactDetails {
             if contactDetail.favorite == false {
                 contactDetail.favorite = true
@@ -144,14 +205,32 @@ class ContactDetailViewController: UIViewController {
                 contactDetail.favorite = false
                 contactFavButton.setImage(UIImage.init(named: "favourite_button"), for: UIControlState())
             }
+             updatedContactDetails["favorite"] = contactDetail.favorite
+        }
+
+        if updatedContactDetails.keys.count > 0 {
+            ContactsApi.EditContactDetailsById(id: (contactDetails?.ID)!, headers: updatedContactDetails) { _ in
+                
+            }
         }
     }
     
+    /**
+     IBAction to be called on tap of edit button
+     - parameter: sender: Any
+     - returns
+     */
     @IBAction func editBtnTapped(_ sender: Any) {
         performSegue(withIdentifier: "editScreenSegue", sender: self)
     }
     
     // MARK: - Navigation
+    
+    /**
+     function to navigate to contact edit VC
+     - parameter: segue: UIStoryboardSegue, sender: Any?
+     - returns
+     */
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let editViewController = segue.destination as? ContactEditViewController else {
             return
@@ -198,7 +277,7 @@ extension ContactDetailViewController: UITableViewDataSource {
         }
         let lineView = UIView(frame: CGRect(x: 20, y: cell.contentView.frame.size.height - 1.0, width: cell.contentView.frame.size.width - 20, height: 1))
         
-        lineView.backgroundColor = Utility.customGreyColor
+        lineView.backgroundColor = Utility.CustomGreyColor
         cell.contentView.addSubview(lineView)
         return cell
     }

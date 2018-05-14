@@ -11,9 +11,11 @@ import UIKit
 
 class Utility {
     
-    static let lightGreenColor = UIColor(red: 80.0/255.0, green: 227.0/255.0, blue: 194.0/255.0, alpha: 0.5)
+    static let LightGreenColor = UIColor(red: 80.0/255.0, green: 227.0/255.0, blue: 194.0/255.0, alpha: 0.5)
     
-    static let customGreyColor = UIColor(red: 239.0/255.0, green: 239.0/255.0, blue: 239.0/255.0, alpha: 1)
+    static let CustomGreyColor = UIColor(red: 239.0/255.0, green: 239.0/255.0, blue: 239.0/255.0, alpha: 1)
+    
+    static let ContactImageBaseUrlString = "http://gojek-contacts-app.herokuapp.com"
     
     class func customizeBackBtnText(navigationItem: UINavigationItem) {
         let backItem = UIBarButtonItem()
@@ -24,7 +26,7 @@ class Utility {
     
     class func setGradientBackground(view: UIView) {
         let colorTop =  UIColor.white
-        let colorBottom = Utility.lightGreenColor.cgColor
+        let colorBottom = Utility.LightGreenColor.cgColor
         
         let gradient: CAGradientLayer = CAGradientLayer()
         

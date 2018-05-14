@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -204,6 +203,7 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CcD-bv-g4A">
                                         <rect key="frame" x="97" y="148" width="181" height="20"/>
                                         <constraints>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="181" id="av0-D1-adT"/>
                                             <constraint firstAttribute="height" constant="20" id="hNs-3L-u7j"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
@@ -223,14 +223,13 @@
                                     <constraint firstItem="Dtx-br-Afr" firstAttribute="leading" secondItem="qxY-0M-tFD" secondAttribute="trailing" constant="39" id="6QJ-hv-tJN"/>
                                     <constraint firstItem="MkU-9H-ILI" firstAttribute="centerX" secondItem="7x6-zi-qxS" secondAttribute="centerX" id="75U-0j-P2z"/>
                                     <constraint firstItem="qxY-0M-tFD" firstAttribute="centerY" secondItem="88j-9i-a8V" secondAttribute="centerY" id="7vy-fe-1ct"/>
-                                    <constraint firstAttribute="trailing" secondItem="CcD-bv-g4A" secondAttribute="trailing" constant="97" id="Am0-S7-9cE"/>
                                     <constraint firstItem="MkU-9H-ILI" firstAttribute="top" secondItem="7x6-zi-qxS" secondAttribute="bottom" constant="14" id="BYB-kD-PzZ"/>
                                     <constraint firstItem="e0m-sX-xrk" firstAttribute="top" secondItem="88j-9i-a8V" secondAttribute="bottom" constant="14" id="FVu-bG-sQP"/>
                                     <constraint firstItem="7x6-zi-qxS" firstAttribute="leading" secondItem="vBt-yh-22B" secondAttribute="leading" constant="44" id="PHX-Sx-IPh"/>
                                     <constraint firstItem="E0B-KM-sMN" firstAttribute="top" secondItem="qxY-0M-tFD" secondAttribute="bottom" constant="14" id="UYJ-Lf-JQI"/>
                                     <constraint firstItem="88j-9i-a8V" firstAttribute="centerY" secondItem="7x6-zi-qxS" secondAttribute="centerY" id="Va6-X8-rO8"/>
                                     <constraint firstItem="RI6-ER-xFi" firstAttribute="centerX" secondItem="vBt-yh-22B" secondAttribute="centerX" id="a0e-Ug-4mW"/>
-                                    <constraint firstItem="CcD-bv-g4A" firstAttribute="leading" secondItem="vBt-yh-22B" secondAttribute="leading" constant="97" id="dFQ-ab-msV"/>
+                                    <constraint firstItem="CcD-bv-g4A" firstAttribute="centerX" secondItem="RI6-ER-xFi" secondAttribute="centerX" id="aeY-xr-Xyk"/>
                                     <constraint firstItem="e0m-sX-xrk" firstAttribute="centerX" secondItem="88j-9i-a8V" secondAttribute="centerX" id="dVV-3h-aSs"/>
                                     <constraint firstItem="Jaa-qz-HIp" firstAttribute="centerX" secondItem="Dtx-br-Afr" secondAttribute="centerX" id="dih-4T-DsN"/>
                                     <constraint firstAttribute="height" constant="271" id="eel-ya-5HX"/>

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class ContactsListViewController: UIViewController {
 
@@ -14,25 +15,32 @@ class ContactsListViewController: UIViewController {
     @IBOutlet weak var contactsListTableView: UITableView!
     
     //MARK: - Variable declarations
-     var contacts: [ContactModel]? = nil
+     var contacts = [Contact]()
      let contactRowHeight: CGFloat = 65
      var selectedContactID: Int?
     
     // MARK: - ViewController Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        ContactsApi.loadContacts() { contacts in
-            
-            self.contacts = contacts
-            self.contacts = self.contacts?.sorted(by: { (Obj1, Obj2) -> Bool in
-                let Obj1_Name = Obj1.firstName!
-                let Obj2_Name = Obj2.firstName!
-                return (Obj1_Name.localizedCaseInsensitiveCompare(Obj2_Name) == .orderedAscending)
-            })
-            DispatchQueue.main.async {
-                self.contactsListTableView.reloadData()
+        let fetchRequest: NSFetchRequest<Contact> = Contact.fetchRequest()
+        
+        do {
+            let contactsList = try PersistenceService.context.fetch(fetchRequest)
+            self.contacts = contactsList
+            if (self.contacts.count == 0) {
+                ContactsApi.loadContacts() { contacts in
+                    
+                    self.contacts = contacts
+                    self.sortContactList()
+                    DispatchQueue.main.async {
+                        self.contactsListTableView.reloadData()
+                    }
+                }
+            } else {
+                 sortContactList()
+                 self.contactsListTableView.reloadData()
             }
-        }
+        } catch {}
     }
 
     override func didReceiveMemoryWarning() {
@@ -40,8 +48,29 @@ class ContactsListViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-     // MARK: - Navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    //MARK: - Private methods
+    
+    /**
+     function to sort the contact list
+     - parameter
+     - returns
+     */
+    fileprivate func sortContactList() {
+        self.contacts = self.contacts.sorted(by: { (Obj1, Obj2) -> Bool in
+            let Obj1_Name = Obj1.firstName!
+            let Obj2_Name = Obj2.firstName!
+            return (Obj1_Name.localizedCaseInsensitiveCompare(Obj2_Name) == .orderedAscending)
+        })
+    }
+    
+    // MARK: - Navigation
+    
+    /**
+     function to navigate to contact detail VC
+     - parameter: segue: UIStoryboardSegue, sender: Any?
+     - returns
+     */
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let detailViewController = segue.destination as? ContactDetailViewController else {
             return
         }
@@ -55,30 +84,45 @@ class ContactsListViewController: UIViewController {
 extension ContactsListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let _ = contacts else {
-            return 0
-        }
-        return contacts!.count
+       return contacts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell: ContactTableViewCell  = tableView.dequeueReusableCell(withIdentifier: "contactCell") as! ContactTableViewCell
        
-        if let contactList  = contacts {
-            if let firstName = contactList[indexPath.row].firstName, let lastName =  contactList[indexPath.row].lastName {
+        if contacts.count > 0 {
+            if let firstName = contacts[indexPath.row].firstName, let lastName =  contacts[indexPath.row].lastName {
                  cell.contactNameLabel.text = firstName + lastName
             }
-            if let fav = contactList[indexPath.row].favorite {
-                cell.contactFavButton.isHidden = fav == 1 ? false : true
-            }
-            if let imageUrl = contactList[indexPath.row].profilePic {
+            cell.contactFavButton.isHidden = (contacts[indexPath.row].favorite == 1) ? false : true
+            
+            let url: URL?
+            
+             cell.contactImageView.layer.cornerRadius = (cell.contactImageView.frame.width/2)
+             cell.contactImageView.clipsToBounds = true
+             cell.contactImageView.contentMode = UIViewContentMode.scaleAspectFill
+            
+            if let imageUrl = contacts[indexPath.row].profilePic {
+                if imageUrl == "/images/missing.png" {
+                    url = URL(string: Utility.ContactImageBaseUrlString+imageUrl)
+                }else {
+                    url = URL(string: imageUrl)
+                }
+                DispatchQueue.global().async {
+                    let data = try? Data(contentsOf: url!)
+                    if let imageData = data {
+                         DispatchQueue.main.async {
+                            cell.contactImageView.image = UIImage(data: imageData)
+                        }
+                    }
+                }
+            }else {
                 cell.contactImageView.image = UIImage.init(named: "placeholder_photo")
-                    //UIImage.init(named: imageUrl)
             }
             let lineView = UIView(frame: CGRect(x: 20, y: cell.contentView.frame.size.height - 1.0, width: cell.contentView.frame.size.width - 20, height: 1))
             
-            lineView.backgroundColor = Utility.customGreyColor
+            lineView.backgroundColor = Utility.CustomGreyColor
             cell.contentView.addSubview(lineView)
         }
         return cell
@@ -94,8 +138,8 @@ extension ContactsListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if let contactList  = contacts {
-            selectedContactID = contactList[indexPath.row].ID
+        if contacts.count > 0 {
+            selectedContactID = Int(contacts[indexPath.row].id)
         }
         
         performSegue(withIdentifier: "contactDetailSegue", sender: self)

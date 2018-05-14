@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreData
 
 class ContactsApi {
     
@@ -20,9 +21,9 @@ class ContactsApi {
     
     
     
-    class func loadContacts(completion: @escaping (_ contacts: [ContactModel]) -> ()) {
+    class func loadContacts(completion: @escaping (_ contacts: [Contact]) -> ()) {
         
-        var contacts =  [ContactModel]()
+        var contacts =  [Contact]()
         
         var request = URLRequest(url: URL(string: ContactsApi.GetContacts)!)
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -39,13 +40,27 @@ class ContactsApi {
             switch (httpResponse.statusCode) {
             case 200:
                 do {
-                    let contactJson = try JSONSerialization.jsonObject(with: data!) as! Array<Any>
+                    let contactJson = try JSONSerialization.jsonObject(with: data!) as! Array<Dictionary<String,Any>>
                     
-                    for i in 0..<contactJson.count {
-                        let contact = ContactModel(with: contactJson[i] as? [String : Any])
-                        contacts.append(contact)
+                    for contact in contactJson {
+
+                        for (_,_) in contact {
+                            let entity = NSEntityDescription.entity(forEntityName: "Contact", in: PersistenceService.context)
+                            let newContact = NSManagedObject(entity: entity!, insertInto: PersistenceService.context)
+                            
+                            newContact.setValue(contact["favorite"] as! Int32, forKey: "favorite")
+                            newContact.setValue(contact["id"] as! Int32, forKey: "id")
+                            newContact.setValue(contact["first_name"] as? String, forKey: "firstName")
+                            newContact.setValue(contact["last_name"] as? String, forKey: "lastName")
+                            newContact.setValue(contact["profile_pic"] as? String, forKey: "profilePic")
+                            newContact.setValue(contact["url"] as? String, forKey: "url")
+                            
+                            contacts.append(newContact as! Contact)
+                        }
                     }
+                    PersistenceService.saveContext()
                     completion(contacts)
+                    
                 }catch {
                     print("error")
                 }

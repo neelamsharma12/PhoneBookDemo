@@ -26,6 +26,9 @@ class ContactAddViewController: UIViewController, UpdateContactDetailsProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
         Utility.setGradientBackground(view: addContactBgView)
+        addContactImageView.layer.cornerRadius = (addContactImageView.frame.width/2)
+        addContactImageView.clipsToBounds = true
+        addContactImageView.contentMode = UIViewContentMode.scaleAspectFill
         // Do any additional setup after loading the view.
     }
 
@@ -35,14 +38,34 @@ class ContactAddViewController: UIViewController, UpdateContactDetailsProtocol {
     }
     
     //MARK: - IBAction Methods
+    
+    /**
+     IBAction to be called on tap of upload image button
+     - parameter: sender: Any
+     - returns
+     */
     @IBAction func uploadImageBtnTapped(_ sender: Any) {
+        let myPickerController = UIImagePickerController()
+        myPickerController.delegate = self
+        myPickerController.sourceType = UIImagePickerControllerSourceType.photoLibrary
         
+        self.present(myPickerController, animated: true, completion: nil)
     }
     
+    /**
+     IBAction to be called on tap of cancel button
+     - parameter: sender: Any
+     - returns
+     */
     @IBAction func cancelBtnTapped(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
     
+    /**
+     IBAction to be called on tap of done button
+     - parameter: sender: Any
+     - returns
+     */
     @IBAction func doneBtnTapped(_ sender: Any) {
         
         if (!contactDetailsDict.keys.contains("first_name"))  {
@@ -68,6 +91,12 @@ class ContactAddViewController: UIViewController, UpdateContactDetailsProtocol {
     }
     
     //MARK: - UpdateContactDetailsProtocol method implementation
+    
+    /**
+     func to be called to get updated field of contact detail
+     - parameter: updatedData: String?, propertyTag: Int
+     - returns
+     */
     func didFinishEditingContactDetails(updatedData: String?, propertyTag: Int ) {
         
         if propertyTag == 0 {
@@ -111,7 +140,7 @@ extension ContactAddViewController: UITableViewDataSource {
         
         let lineView = UIView(frame: CGRect(x: 20, y: cell.contentView.frame.size.height - 1.0, width: cell.contentView.frame.size.width - 20, height: 1))
         
-        lineView.backgroundColor = Utility.customGreyColor
+        lineView.backgroundColor = Utility.CustomGreyColor
         cell.contentView.addSubview(lineView)
         return cell
     }
@@ -122,5 +151,14 @@ extension ContactAddViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return contactDetailRowHeight
     }
+}
+
+extension ContactAddViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        addContactImageView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
+        self.dismiss(animated: true, completion: nil)
+    }
+    
 }
 
