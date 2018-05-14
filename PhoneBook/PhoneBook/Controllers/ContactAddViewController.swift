@@ -156,8 +156,16 @@ extension ContactAddViewController: UITableViewDelegate {
 extension ContactAddViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        addContactImageView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
-        self.dismiss(animated: true, completion: nil)
+        
+        if let imgUrl = info[UIImagePickerControllerImageURL] as? URL{
+            let imgName = imgUrl.lastPathComponent
+            let documentDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first
+            let localPath = documentDirectory?.appending(imgName)
+            contactDetailsDict["profile_pic"] = localPath
+            
+            addContactImageView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
+            self.dismiss(animated: true, completion: nil)
+        }
     }
     
 }

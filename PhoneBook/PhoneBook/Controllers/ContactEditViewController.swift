@@ -19,7 +19,7 @@ class ContactEditViewController: UIViewController, UpdateContactDetailsProtocol 
     
     //MARK: - Variable declarations
     var contactDetails: ContactDetailModel!
-    var updatedContactDict: [String: Any]?
+    var updatedContactDict = [String: Any]()
     let contactDetailRowHeight: CGFloat = 56
     var contactDetailsDict = [String: Any]()
     
@@ -72,8 +72,8 @@ class ContactEditViewController: UIViewController, UpdateContactDetailsProtocol 
     @IBAction func doneBtnTapped(_ sender: Any) {
         var updatedContactDetails: [String: Any]!
     
-        if let updatedContactData = self.updatedContactDict {
-            updatedContactDetails = updatedContactData
+        if self.updatedContactDict.keys.count > 0 {
+            updatedContactDetails = self.updatedContactDict
         }
         if updatedContactDetails != nil {
             ContactsApi.EditContactDetailsById(id: contactDetails.ID!, headers: updatedContactDetails) { updatedContactDetails in
@@ -162,8 +162,16 @@ extension ContactEditViewController: UITableViewDelegate {
 extension ContactEditViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        editContactImageView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
-        self.dismiss(animated: true, completion: nil)
-    }
+        
+        if let imgUrl = info[UIImagePickerControllerImageURL] as? URL{
+            let imgName = imgUrl.lastPathComponent
+            let documentDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first
+            let localPath = documentDirectory?.appending(imgName)
+            updatedContactDict["profile_pic"] = localPath
+            
+            editContactImageView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
 
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
 }

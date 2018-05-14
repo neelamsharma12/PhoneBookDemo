@@ -43,7 +43,6 @@ class ContactsApi {
                     let contactJson = try JSONSerialization.jsonObject(with: data!) as! Array<Dictionary<String,Any>>
                     
                     for contact in contactJson {
-
                         for (_,_) in contact {
                             let entity = NSEntityDescription.entity(forEntityName: "Contact", in: PersistenceService.context)
                             let newContact = NSManagedObject(entity: entity!, insertInto: PersistenceService.context)
@@ -65,10 +64,15 @@ class ContactsApi {
                     print("error")
                 }
                 break
-                
-            case 400:
+            case 404:
+                print("Not Found")
                 break
-                
+            case 500:
+                print("Internal Server Error")
+                break
+            case 422:
+                print("Validation Errors")
+                break
             default:
                 print("contacts GET request got response \(httpResponse.statusCode)")
             }
@@ -101,10 +105,15 @@ class ContactsApi {
                     print("error")
                 }
                 break
-                
-            case 400:
+            case 404:
+                print("Not Found")
                 break
-                
+            case 500:
+                print("Internal Server Error")
+                break
+            case 422:
+                print("Validation Errors")
+                break
             default:
                 print("contacts GET request got response \(httpResponse.statusCode)")
             }
@@ -142,10 +151,15 @@ class ContactsApi {
                     print("error")
                 }
                 break
-                
-            case 400:
+            case 404:
+                print("Not Found")
                 break
-                
+            case 500:
+                print("Internal Server Error")
+                break
+            case 422:
+                print("Validation Errors")
+                break
             default:
                 print("contacts GET request got response \(httpResponse.statusCode)")
             }
@@ -173,17 +187,18 @@ class ContactsApi {
             }
             
             switch (httpResponse.statusCode) {
-            case 200:
-                completion("ok")
-                break
-                
-            case 400:
-                break
-                
             case 201:
-                completion("Successfully created")
+                completion("Contact successfully created")
                 break
-                
+            case 404:
+                completion("Not Found")
+                break
+            case 500:
+                completion("Internal Server Error")
+                break
+            case 422:
+                completion("Validation Errors")
+                break
             default:
                 print("contacts GET request got response \(httpResponse.statusCode)")
             }
