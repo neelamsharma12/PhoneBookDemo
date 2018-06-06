@@ -167,7 +167,7 @@ class ContactsApi {
         task.resume()
     }
     
-    class func addContactDetails(headers: [String: Any], completion: @escaping (_ status: String) -> ()) {
+    class func addContactDetails(headers: [String: Any], completion: @escaping (_ status: Int) -> ()) {
         
         var request = URLRequest(url: URL(string: ContactsApi.AddContact)!)
         request.httpMethod = "POST"
@@ -188,16 +188,20 @@ class ContactsApi {
             
             switch (httpResponse.statusCode) {
             case 201:
-                completion("Contact successfully created")
+                print("Contact successfully created")
+                completion(201)
                 break
             case 404:
-                completion("Not Found")
+                print("Not Found")
+                completion(404)
                 break
             case 500:
-                completion("Internal Server Error")
+                print("Internal Server Error")
+                completion(500)
                 break
             case 422:
-                completion("Validation Errors")
+                print("Validation Errors")
+                completion(422)
                 break
             default:
                 print("contacts GET request got response \(httpResponse.statusCode)")
