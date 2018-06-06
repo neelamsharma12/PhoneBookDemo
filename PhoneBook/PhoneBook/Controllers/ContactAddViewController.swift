@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class ContactAddViewController: UIViewController, UpdateContactDetailsProtocol {
 
@@ -66,7 +67,7 @@ class ContactAddViewController: UIViewController, UpdateContactDetailsProtocol {
      - parameter: sender: Any
      - returns
      */
-    @IBAction func doneBtnTapped(_ sender: Any) {
+    @IBAction func saveBtnTapped(_ sender: Any) {
         
         if (!contactDetailsDict.keys.contains("first_name"))  {
             contactDetailsDict["first_name"] = ""
@@ -85,7 +86,9 @@ class ContactAddViewController: UIViewController, UpdateContactDetailsProtocol {
         }
         
         ContactsApi.addContactDetails( headers: contactDetailsDict) { status in
-            print(status)
+            if status == 201 {
+                self.updateCoreData()
+            }
         }
         self.navigationController?.popViewController(animated: true)
     }
@@ -111,6 +114,27 @@ class ContactAddViewController: UIViewController, UpdateContactDetailsProtocol {
         }else {
             contactDetailsDict["email"] = updatedData ?? ""
         }
+    }
+    
+    //MARK: - Private methods
+    
+    /**
+     func to be called to save the newly created contact in the core database
+     - parameter:
+     - returns
+     */
+    fileprivate func updateCoreData() {
+        
+        let entity = NSEntityDescription.entity(forEntityName: "Contact", in: PersistenceService.context)
+        let newContact = NSManagedObject(entity: entity!, insertInto: PersistenceService.context)
+        
+        newContact.setValue(contactDetailsDict["first_name"] as? String, forKey: "firstName")
+        newContact.setValue(contactDetailsDict["last_name"] as? String, forKey: "lastName")
+        newContact.setValue(contactDetailsDict["email"] as? String, forKey: "email")
+        
+        newContact.setValue(0, forKey: "favorite")
+        newContact.setValue(contactDetailsDict["phone_number"] as? String, forKey: "phoneNumber")
+        PersistenceService.saveContext()
     }
 }
 
@@ -157,12 +181,7 @@ extension ContactAddViewController: UIImagePickerControllerDelegate, UINavigatio
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
-        if let imgUrl = info[UIImagePickerControllerImageURL] as? URL{
-            let imgName = imgUrl.lastPathComponent
-            let documentDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first
-            let localPath = documentDirectory?.appending(imgName)
-            contactDetailsDict["profile_pic"] = localPath
-            
+        if let _ = info[UIImagePickerControllerImageURL] as? URL{
             addContactImageView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
             self.dismiss(animated: true, completion: nil)
         }

@@ -122,28 +122,30 @@ extension ContactEditViewController: UITableViewDataSource {
         cell.editContactPropertyInfoLabel.tag = indexPath.row
         cell.delegate = self
         
-        if indexPath.row == 0 {
-            if let firstName =  contactDetails.firstName {
-                cell.editContactPropertyInfoLabel.text = firstName
+        if contactDetails != nil {
+            if indexPath.row == 0 {
+                
+                if let firstName =  contactDetails.firstName {
+                    cell.editContactPropertyInfoLabel.text = firstName
+                }
+                cell.editContactPropertyNameLabel.textAlignment = .left
+            }else if indexPath.row == 1 {
+                if let lastName =  contactDetails.lastName {
+                    cell.editContactPropertyInfoLabel.text = lastName
+                }
+                cell.editContactPropertyNameLabel.textAlignment = .left
+            }else if indexPath.row == 2 {
+                if let phNumber =  contactDetails.phoneNumber {
+                    cell.editContactPropertyInfoLabel.text = phNumber
+                }
+                cell.editContactPropertyNameLabel.textAlignment = .right
+            }else {
+                if let emailId =  contactDetails.email {
+                    cell.editContactPropertyInfoLabel.text = emailId
+                }
+                cell.editContactPropertyNameLabel.textAlignment = .right
             }
-            cell.editContactPropertyNameLabel.textAlignment = .left
-        }else if indexPath.row == 1 {
-            if let lastName =  contactDetails.lastName {
-                cell.editContactPropertyInfoLabel.text = lastName
-            }
-            cell.editContactPropertyNameLabel.textAlignment = .left
-        }else if indexPath.row == 2 {
-            if let phNumber =  contactDetails.phoneNumber {
-                cell.editContactPropertyInfoLabel.text = phNumber
-            }
-            cell.editContactPropertyNameLabel.textAlignment = .right
-        }else {
-            if let emailId =  contactDetails.email {
-                cell.editContactPropertyInfoLabel.text = emailId
-            }
-            cell.editContactPropertyNameLabel.textAlignment = .right
         }
-       
         let lineView = UIView(frame: CGRect(x: 20, y: cell.contentView.frame.size.height - 1.0, width: cell.contentView.frame.size.width - 20, height: 1))
         
         lineView.backgroundColor = Utility.CustomGreyColor
@@ -163,12 +165,7 @@ extension ContactEditViewController: UIImagePickerControllerDelegate, UINavigati
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
-        if let imgUrl = info[UIImagePickerControllerImageURL] as? URL{
-            let imgName = imgUrl.lastPathComponent
-            let documentDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first
-            let localPath = documentDirectory?.appending(imgName)
-            updatedContactDict["profile_pic"] = localPath
-            
+        if let _ = info[UIImagePickerControllerImageURL] as? URL{
             editContactImageView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
 
             self.dismiss(animated: true, completion: nil)
