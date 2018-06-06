@@ -8,6 +8,7 @@
 
 import UIKit
 import MessageUI
+import CoreData
 
 class ContactDetailViewController: UIViewController {
 
@@ -49,7 +50,7 @@ class ContactDetailViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    //Private methods
+    //MARK : - Private methods
     
     /**
      function to load the contact details information
@@ -142,6 +143,21 @@ class ContactDetailViewController: UIViewController {
             }
         }
     }
+    
+    /**
+     func to be called to save the update contact favourite status in the core database
+     - parameter: isFav: Bool
+     - returns
+     */
+    
+    fileprivate func updateContactFavStatusInCoreData(isFav: Bool) {
+        let entity = NSEntityDescription.entity(forEntityName: "Contact", in: PersistenceService.context)
+        let newContact = NSManagedObject(entity: entity!, insertInto: PersistenceService.context)
+        
+        let status: Int = (isFav == false) ? 0 : 1
+        newContact.setValue(status, forKey: "favorite")
+        PersistenceService.saveContext()
+    }
 
     //MARK: - IBAction Methods
     
@@ -206,11 +222,15 @@ class ContactDetailViewController: UIViewController {
                 contactFavButton.setImage(UIImage.init(named: "favourite_button"), for: UIControlState())
             }
              updatedContactDetails["favorite"] = contactDetail.favorite
+            
         }
-
+        
         if updatedContactDetails.keys.count > 0 {
-            ContactsApi.EditContactDetailsById(id: (contactDetails?.ID)!, headers: updatedContactDetails) { _ in
+            ContactsApi.EditContactDetailsById(id: (contactDetails?.ID)!, headers: updatedContactDetails) { contactDetails in
                 
+                if let _ = contactDetails.ID {
+                    self.updateContactFavStatusInCoreData(isFav: contactDetails.favorite ?? false)
+                }
             }
         }
     }

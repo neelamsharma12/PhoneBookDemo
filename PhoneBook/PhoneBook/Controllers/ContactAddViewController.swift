@@ -38,6 +38,27 @@ class ContactAddViewController: UIViewController, UpdateContactDetailsProtocol {
         // Dispose of any resources that can be recreated.
     }
     
+    //MARK: - Private methods
+    
+    /**
+     func to be called to save the newly created contact in the core database
+     - parameter:
+     - returns
+     */
+    fileprivate func updateCoreData() {
+        
+        let entity = NSEntityDescription.entity(forEntityName: "Contact", in: PersistenceService.context)
+        let newContact = NSManagedObject(entity: entity!, insertInto: PersistenceService.context)
+        
+        newContact.setValue(contactDetailsDict["first_name"] as? String, forKey: "firstName")
+        newContact.setValue(contactDetailsDict["last_name"] as? String, forKey: "lastName")
+        newContact.setValue(contactDetailsDict["email"] as? String, forKey: "email")
+        
+        newContact.setValue(0, forKey: "favorite")
+        newContact.setValue(contactDetailsDict["phone_number"] as? String, forKey: "phoneNumber")
+        PersistenceService.saveContext()
+    }
+    
     //MARK: - IBAction Methods
     
     /**
@@ -114,27 +135,6 @@ class ContactAddViewController: UIViewController, UpdateContactDetailsProtocol {
         }else {
             contactDetailsDict["email"] = updatedData ?? ""
         }
-    }
-    
-    //MARK: - Private methods
-    
-    /**
-     func to be called to save the newly created contact in the core database
-     - parameter:
-     - returns
-     */
-    fileprivate func updateCoreData() {
-        
-        let entity = NSEntityDescription.entity(forEntityName: "Contact", in: PersistenceService.context)
-        let newContact = NSManagedObject(entity: entity!, insertInto: PersistenceService.context)
-        
-        newContact.setValue(contactDetailsDict["first_name"] as? String, forKey: "firstName")
-        newContact.setValue(contactDetailsDict["last_name"] as? String, forKey: "lastName")
-        newContact.setValue(contactDetailsDict["email"] as? String, forKey: "email")
-        
-        newContact.setValue(0, forKey: "favorite")
-        newContact.setValue(contactDetailsDict["phone_number"] as? String, forKey: "phoneNumber")
-        PersistenceService.saveContext()
     }
 }
 
