@@ -580,10 +580,10 @@
                                 <action selector="cancelBtnTapped:" destination="08J-sZ-OhL" id="v8n-nD-PC3"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Done" style="plain" id="53d-3V-9NA">
+                        <barButtonItem key="rightBarButtonItem" title="Save" style="plain" id="53d-3V-9NA">
                             <color key="tintColor" red="0.31372549020000001" green="0.89019607840000003" blue="0.76078431369999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
-                                <action selector="doneBtnTapped:" destination="08J-sZ-OhL" id="Wgh-WT-iec"/>
+                                <action selector="saveBtnTapped:" destination="08J-sZ-OhL" id="7M1-Pc-uaT"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
