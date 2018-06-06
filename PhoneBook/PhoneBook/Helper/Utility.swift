@@ -13,6 +13,8 @@ class Utility {
     
     static let LightGreenColor = UIColor(red: 80.0/255.0, green: 227.0/255.0, blue: 194.0/255.0, alpha: 0.5)
     
+    static let LightGreyHeaderViewColor = UIColor(red: 242.0/255.0, green: 242.0/255.0, blue: 242.0/255.0, alpha: 1.0)
+    
     static let CustomGreyColor = UIColor(red: 239.0/255.0, green: 239.0/255.0, blue: 239.0/255.0, alpha: 1)
     
     static let ContactImageBaseUrlString = "http://gojek-contacts-app.herokuapp.com"
@@ -37,3 +39,26 @@ class Utility {
         view.layer.insertSublayer(gradient, at: 0)
     }
 }
+
+extension UILocalizedIndexedCollation {
+    
+    func partitionObjects(array:[AnyObject], collationStringSelector:Selector) -> [AnyObject] {
+        var unsortedSections = [[AnyObject]]()
+        //1. Create a array to hold the data for each section
+        for _ in self.sectionTitles {
+            unsortedSections.append([]) //appending an empty array
+        }
+        //2. put each objects into a section
+        for item in array {
+            let index:Int = self.section(for: item, collationStringSelector:collationStringSelector)
+            unsortedSections[index].append(item)
+        }
+        //3. sort the array of each sections
+        var sections = [AnyObject]()
+        for index in 0 ..< unsortedSections.count {
+            sections.append(self.sortedArray(from: unsortedSections[index], collationStringSelector: collationStringSelector) as AnyObject)
+        }
+        return sections
+    }
+}
+
