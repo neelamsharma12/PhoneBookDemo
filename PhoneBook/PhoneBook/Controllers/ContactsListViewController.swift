@@ -37,9 +37,9 @@ class ContactsListViewController: UIViewController {
                     self.contacts = contacts
                     if (self.contacts.count > 0) {
                         self.contactsWithSections = self.collation.partitionObjects(array: self.contacts, collationStringSelector: #selector(getter: Contact.firstName)) as! [[Contact]]
-                    }
-                    DispatchQueue.main.async {
-                        self.contactsListTableView.reloadData()
+                        DispatchQueue.main.async {
+                            self.contactsListTableView.reloadData()
+                        }
                     }
                 }
             } else {
