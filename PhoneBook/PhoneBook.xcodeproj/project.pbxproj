@@ -43,8 +43,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		002E202420C83DEA00CE6A39 /* Contact+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Contact+CoreDataClass.swift"; sourceTree = "<group>"; };
-		002E202520C83DEA00CE6A39 /* Contact+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Contact+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		002E202C20C8E9F400CE6A39 /* Contact+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Contact+CoreDataClass.swift"; sourceTree = "<group>"; };
+		002E202D20C8E9F400CE6A39 /* Contact+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Contact+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		0035F02E20A6A3F0001C70CF /* PhoneBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhoneBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0035F03820A6A3F1001C70CF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0035F03D20A6A3F1001C70CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -153,8 +153,8 @@
 		0035F05D20A6B6F4001C70CF /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				002E202420C83DEA00CE6A39 /* Contact+CoreDataClass.swift */,
-				002E202520C83DEA00CE6A39 /* Contact+CoreDataProperties.swift */,
+				002E202C20C8E9F400CE6A39 /* Contact+CoreDataClass.swift */,
+				002E202D20C8E9F400CE6A39 /* Contact+CoreDataProperties.swift */,
 				008C4A0820A97EC50069DCE6 /* ContactDetailModel.swift */,
 			);
 			path = Models;

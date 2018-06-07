@@ -16,8 +16,11 @@ class ContactsListViewController: UIViewController {
     
     //MARK: - Variable declarations
      var contacts = [Contact]()
+     var contactsWithSections = [[Contact]]()
      let contactRowHeight: CGFloat = 65
      var selectedContactID: Int?
+     var letterIndex = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
+     let collation = UILocalizedIndexedCollation.current()
     
     // MARK: - ViewController Lifecycle
     override func viewDidLoad() {
@@ -27,17 +30,20 @@ class ContactsListViewController: UIViewController {
         do {
             let contactsList = try PersistenceService.context.fetch(fetchRequest)
             self.contacts = contactsList
+
             if (self.contacts.count == 0) {
                 ContactsApi.loadContacts() { contacts in
-                    
+                
                     self.contacts = contacts
-                    self.sortContactList()
+                    if (self.contacts.count > 0) {
+                        self.contactsWithSections = self.collation.partitionObjects(array: self.contacts, collationStringSelector: #selector(getter: Contact.firstName)) as! [[Contact]]
+                    }
                     DispatchQueue.main.async {
                         self.contactsListTableView.reloadData()
                     }
                 }
             } else {
-                 sortContactList()
+                contactsWithSections = collation.partitionObjects(array: self.contacts, collationStringSelector: #selector(getter: Contact.firstName)) as! [[Contact]]
                  self.contactsListTableView.reloadData()
             }
         } catch {}
@@ -46,21 +52,6 @@ class ContactsListViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-
-    //MARK: - Private methods
-    
-    /**
-     function to sort the contact list
-     - parameter
-     - returns
-     */
-    fileprivate func sortContactList() {
-        self.contacts = self.contacts.sorted(by: { (Obj1, Obj2) -> Bool in
-            let Obj1_Name = Obj1.firstName!
-            let Obj2_Name = Obj2.firstName!
-            return (Obj1_Name.localizedCaseInsensitiveCompare(Obj2_Name) == .orderedAscending)
-        })
     }
     
     // MARK: - Navigation
@@ -83,19 +74,33 @@ class ContactsListViewController: UIViewController {
 
 extension ContactsListViewController: UITableViewDataSource {
     
+    func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+        return letterIndex
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+         return contactsWithSections.count
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return collation.sectionTitles[section]
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       return contacts.count
+       return contactsWithSections[section].count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell: ContactTableViewCell  = tableView.dequeueReusableCell(withIdentifier: "contactCell") as! ContactTableViewCell
+        
+        let contact = contactsWithSections[indexPath.section][indexPath.row]
        
         if contacts.count > 0 {
-            if let firstName = contacts[indexPath.row].firstName, let lastName =  contacts[indexPath.row].lastName {
+            if let firstName = contact.firstName, let lastName =  contact.lastName {
                  cell.contactNameLabel.text = firstName + lastName
             }
-            cell.contactFavButton.isHidden = (contacts[indexPath.row].favorite == 1) ? false : true
+            cell.contactFavButton.isHidden = (contact.favorite == 1) ? false : true
             
             let url: URL?
             
@@ -103,7 +108,7 @@ extension ContactsListViewController: UITableViewDataSource {
              cell.contactImageView.clipsToBounds = true
              cell.contactImageView.contentMode = UIViewContentMode.scaleAspectFill
             
-            if let imageUrl = contacts[indexPath.row].profilePic {
+            if let imageUrl = contact.profilePic {
                 if imageUrl == "/images/missing.png" {
                     url = URL(string: Utility.ContactImageBaseUrlString+imageUrl)
                 }else {
@@ -127,8 +132,6 @@ extension ContactsListViewController: UITableViewDataSource {
         }
         return cell
     }
-    
-    
 }
 
 extension ContactsListViewController: UITableViewDelegate {

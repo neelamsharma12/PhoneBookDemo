@@ -38,6 +38,14 @@ class Utility {
         
         view.layer.insertSublayer(gradient, at: 0)
     }
+    
+    class func getCurrentDate() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        let dateString = dateFormatter.string(from: NSDate() as Date)
+        return dateString
+    }
 }
 
 extension UILocalizedIndexedCollation {

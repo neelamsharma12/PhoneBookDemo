@@ -22,10 +22,13 @@ class ContactAddViewController: UIViewController, UpdateContactDetailsProtocol {
     let contactDetailRowHeight: CGFloat = 56
     var contactDetailProperties = ["First Name","Last Name","mobile", "email"]
     var contactDetailsDict = [String: Any]()
+    var createdAt: String?
+    var updatedAt: String?
     
     // MARK: - ViewController Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        addContactDetailTableView.tableFooterView = UIView()
         Utility.setGradientBackground(view: addContactBgView)
         addContactImageView.layer.cornerRadius = (addContactImageView.frame.width/2)
         addContactImageView.clipsToBounds = true
@@ -50,7 +53,11 @@ class ContactAddViewController: UIViewController, UpdateContactDetailsProtocol {
         let entity = NSEntityDescription.entity(forEntityName: "Contact", in: PersistenceService.context)
         let newContact = NSManagedObject(entity: entity!, insertInto: PersistenceService.context)
         
+        newContact.setValue(contactDetailsDict["id"] as? Int, forKey: "id")
+        
         newContact.setValue(contactDetailsDict["first_name"] as? String, forKey: "firstName")
+        newContact.setValue(contactDetailsDict["created_at"] as? String, forKey: "createdAt")
+        newContact.setValue(contactDetailsDict["updated_at"] as? String, forKey: "updatedAt")
         newContact.setValue(contactDetailsDict["last_name"] as? String, forKey: "lastName")
         newContact.setValue(contactDetailsDict["email"] as? String, forKey: "email")
         
@@ -90,6 +97,18 @@ class ContactAddViewController: UIViewController, UpdateContactDetailsProtocol {
      */
     @IBAction func saveBtnTapped(_ sender: Any) {
         
+        createdAt =  Utility.getCurrentDate()
+        updatedAt = createdAt
+        
+        if (!contactDetailsDict.keys.contains("id"))  {
+            contactDetailsDict["id"] = NSUUID().uuidString.hashValue
+        }
+        if (!contactDetailsDict.keys.contains("created_at"))  {
+            contactDetailsDict["created_at"] = createdAt!
+        }
+        if (!contactDetailsDict.keys.contains("updated_at"))  {
+            contactDetailsDict["updated_at"] = updatedAt!
+        }
         if (!contactDetailsDict.keys.contains("first_name"))  {
             contactDetailsDict["first_name"] = ""
         }

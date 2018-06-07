@@ -22,6 +22,8 @@ class ContactEditViewController: UIViewController, UpdateContactDetailsProtocol 
     var updatedContactDict = [String: Any]()
     let contactDetailRowHeight: CGFloat = 56
     var contactDetailsDict = [String: Any]()
+    var createdAt: String?
+    var updatedAt: String?
     
     // MARK: - ViewController Lifecycle
     override func viewDidLoad() {
@@ -71,8 +73,17 @@ class ContactEditViewController: UIViewController, UpdateContactDetailsProtocol 
      */
     @IBAction func doneBtnTapped(_ sender: Any) {
         var updatedContactDetails: [String: Any]!
-    
+        
+        createdAt =  Utility.getCurrentDate()
+        updatedAt = createdAt
+        
         if self.updatedContactDict.keys.count > 0 {
+            if (!updatedContactDict.keys.contains("created_at"))  {
+                updatedContactDict["created_at"] = createdAt!
+            }
+            if (!updatedContactDict.keys.contains("updated_at"))  {
+                updatedContactDict["updated_at"] = updatedAt!
+            }
             updatedContactDetails = self.updatedContactDict
         }
         if updatedContactDetails != nil {
